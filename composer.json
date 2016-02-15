@@ -20,10 +20,5 @@
         "php": ">=5.4.0",
         "illuminate/support": "5.0.x|5.1.x|5.2.x",
         "illuminate/console": "5.0.x|5.1.x|5.2.x"
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "0.1-dev"
-        }
     }
 }
