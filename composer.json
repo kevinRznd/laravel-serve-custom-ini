@@ -3,6 +3,7 @@
     "description": "Replaces Laravel's \"serve\" command with an equivalent allowing the developer to specify his custom php.ini file. Comes in handy when serving locally and in need of quickly toggling Xdebug.",
     "license": "MIT",
     "version": "0.1",
+    "keywords": ["laravel", "laravel5", "serve", "xdebug", "cli"],
     "authors": [
         {
             "name": "Michał Mieluch",
