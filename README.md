@@ -2,6 +2,9 @@
 
 Replaces Laravel's "serve" command with an equivalent allowing the developer to specify his custom `php.ini` file. Comes in handy when serving locally and in need of quickly toggling Xdebug.
 
+[![Latest Stable Version](https://poser.pugx.org/mmieluch/laravel-serve-custom-ini/v/stable)](https://packagist.org/packages/mmieluch/laravel-serve-custom-ini)
+[![License](https://poser.pugx.org/mmieluch/laravel-serve-custom-ini/license)](https://packagist.org/packages/mmieluch/laravel-serve-custom-ini)
+
 ## Installation
 
 1. Install via Composer:
