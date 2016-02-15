@@ -2,7 +2,7 @@
     "name": "mmieluch/laravel-serve-custom-ini",
     "description": "Replaces Laravel's \"serve\" command with an equivalent allowing the developer to specify his custom php.ini file. Comes in handy when serving locally and in need of quickly toggling Xdebug.",
     "license": "MIT",
-    "keywords": ["laravel", "laravel5", "serve", "xdebug", "cli"],
+    "keywords": ["laravel", "serve", "xdebug", "cli"],
     "authors": [
         {
             "name": "Michał Mieluch",
