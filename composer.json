@@ -14,8 +14,7 @@
         "psr-4": {
             "Mmieluch\\LaravelServeCustomIni\\": "src"
         }
-    },
-    "minimum-stability": "dev",
+    }
     "require": {
         "php": ">=5.4.0",
         "illuminate/support": "5.0.x|5.1.x|5.2.x",
