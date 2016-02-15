@@ -1,0 +1,28 @@
+{
+    "name": "mmieluch/laravel-serve-custom-ini",
+    "description": "Replaces Laravel's \"serve\" command with an equivalent allowing the developer to specify his custom php.ini file. Comes in handy when serving locally and in need of quickly toggling Xdebug.",
+    "license": "MIT",
+    "version": "0.1",
+    "authors": [
+        {
+            "name": "Michał Mieluch",
+            "email": "michal.mieluch@bluefroglondon.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Mmieluch\\LaravelServeCustomIni\\": "src"
+        }
+    },
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.4.0",
+        "illuminate/support": "5.0.x|5.1.x|5.2.x",
+        "illuminate/console": "5.0.x|5.1.x|5.2.x"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.1-dev"
+        }
+    }
+}
