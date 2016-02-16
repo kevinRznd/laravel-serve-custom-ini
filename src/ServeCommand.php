@@ -22,8 +22,7 @@ class ServeCommand extends Command
      *
      * @var string
      */
-//    protected $description = 'Serve the application on the PHP development server using custom INI file.';
-    protected $description = 'Test';
+    protected $description = 'Serve the application on the PHP development server using custom INI file.';
 
     /**
      * Default location of custom php.ini file (in root of the project).
@@ -64,6 +63,16 @@ class ServeCommand extends Command
         }
     }
 
+    /**
+     * Returns a command to pass through to shell.
+     *
+     * @param string $binary Usually full path to the PHP executable
+     * @param string $host   Hostname
+     * @param int    $port
+     * @param string $base   Full path to Laravel project root
+     *
+     * @return string
+     */
     protected function buildCommand($binary, $host, $port, $base)
     {
         $binary = $this->handleCustomIni($binary);
@@ -73,20 +82,31 @@ class ServeCommand extends Command
         return $command;
     }
 
+    /**
+     * Adds parameter telling PHP built-in server to respect a custom
+     * php.ini file.
+     *
+     * @param string $command Command built up to this point.
+     *
+     * @return string
+     */
     protected function handleCustomIni($command)
     {
         $ini = $this->input->getOption('ini');
 
+        // If --ini parameter was not specified, just return the command
+        // is at has been constructed.
         if (!$ini) {
             return $command;
         }
 
-        // Additional parameter will not work when escaped with single quotes
+        // Additional parameter will not work when escaped with single quotes.
         $command = str_replace("'", '', $command);
 
-        $iniPath = $ini === $this->defaultIniPath
+        // Determine the path
+        $iniPath = ($ini === $this->defaultIniPath)
           ? $this->laravel->basePath() . '/php.ini'
-          : $ini;
+          : realpath($ini);
 
         $this->info('Loading custom configuration file: ' . $iniPath, 'v');
 
@@ -97,6 +117,7 @@ class ServeCommand extends Command
             ));
         }
 
+        // Append PHP parameter with a path to the configuration file.
         $command .= ' -c ' . $iniPath;
 
         return $command;
@@ -110,11 +131,29 @@ class ServeCommand extends Command
     protected function getOptions()
     {
         return [
-          ['host', null, InputOption::VALUE_OPTIONAL, 'The host address to serve the application on.', 'localhost'],
+          [
+            'host',
+            null,
+            InputOption::VALUE_OPTIONAL,
+            'The host address to serve the application on.',
+            'localhost',
+          ],
 
-          ['port', null, InputOption::VALUE_OPTIONAL, 'The port to serve the application on.', 8000],
+          [
+            'port',
+            null,
+            InputOption::VALUE_OPTIONAL,
+            'The port to serve the application on.',
+            8000,
+          ],
 
-          ['ini', null, InputOption::VALUE_OPTIONAL, 'Whether to load custom php.ini: null defaults to project root, otherwise will treat as a path', $this->defaultIniPath],
+          [
+            'ini',
+            null,
+            InputOption::VALUE_OPTIONAL,
+            'Whether to load custom php.ini: null defaults to project root, otherwise will treat as a path',
+            $this->defaultIniPath,
+          ],
         ];
     }
 }
