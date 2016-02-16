@@ -3,6 +3,7 @@
 namespace Mmieluch\LaravelServeCustomIni;
 
 use Illuminate\Console\Events\ArtisanStarting;
+use Illuminate\Foundation\Console\ServeCommand as OriginalCommand;
 use Illuminate\Support\ServiceProvider;
 
 class LaravelServeCustomIniProvider extends ServiceProvider
@@ -22,12 +23,9 @@ class LaravelServeCustomIniProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app['events']->listen(ArtisanStarting::class, function ($event) {
-            $this->app->singleton('command.serve', function ($app) {
-                return new ServeCommand();
-            });
-
-            $this->commands('command.serve');
+        $this->app->alias('command.serve', ServeCommand::class);
+        $this->app->singleton('command.serve', function() {
+            return new ServeCommand;
         });
     }
 
