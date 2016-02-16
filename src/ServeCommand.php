@@ -59,7 +59,11 @@ class ServeCommand extends Command
                 throw new Exception("HHVM's built-in server requires HHVM >= 3.8.0.");
             }
         } else {
-            passthru($this->buildCommand($binary, $host, $port, $base));
+            $command = $this->buildCommand($binary, $host, $port, $base);
+
+            $this->info('Command to execute: ' . $command, 'v');
+
+            passthru($command);
         }
     }
 
@@ -77,6 +81,8 @@ class ServeCommand extends Command
     {
         $binary = $this->handleCustomIni($binary);
 
+        $base = str_replace("'", '', $base);
+
         $command = "{$binary} -S {$host}:{$port} {$base}/server.php";
 
         return $command;
@@ -92,11 +98,9 @@ class ServeCommand extends Command
      */
     protected function handleCustomIni($command)
     {
-        $ini = $this->input->getOption('ini');
-
         // If --ini parameter was not specified, just return the command
         // is at has been constructed.
-        if (!$ini) {
+        if (!$this->option('ini')) {
             return $command;
         }
 
@@ -104,9 +108,11 @@ class ServeCommand extends Command
         $command = str_replace("'", '', $command);
 
         // Determine the path
-        $iniPath = ($ini === $this->defaultIniPath)
-          ? $this->laravel->basePath() . '/php.ini'
-          : realpath($ini);
+        $iniPath = ($this->option('ini-path') === $this->defaultIniPath)
+          ? $this->laravel->basePath() . '/' . $this->defaultIniPath
+          : $this->option('ini-path');
+
+        $iniPath = realpath($iniPath);
 
         $this->info('Loading custom configuration file: ' . $iniPath, 'v');
 
@@ -131,29 +137,13 @@ class ServeCommand extends Command
     protected function getOptions()
     {
         return [
-          [
-            'host',
-            null,
-            InputOption::VALUE_OPTIONAL,
-            'The host address to serve the application on.',
-            'localhost',
-          ],
+            ['host', null, InputOption::VALUE_OPTIONAL, 'The host address to serve the application on.', 'localhost'],
 
-          [
-            'port',
-            null,
-            InputOption::VALUE_OPTIONAL,
-            'The port to serve the application on.',
-            8000,
-          ],
+            ['port', null, InputOption::VALUE_OPTIONAL, 'The port to serve the application on.', 8000],
 
-          [
-            'ini',
-            null,
-            InputOption::VALUE_OPTIONAL,
-            'Whether to load custom php.ini: null defaults to project root, otherwise will treat as a path',
-            $this->defaultIniPath,
-          ],
+            ['ini', null, InputOption::VALUE_NONE, 'Whether to load custom php.ini'],
+
+            ['ini-path', null, InputOption::VALUE_OPTIONAL, 'Path to custom php.ini file', $this->defaultIniPath],
         ];
     }
 }
