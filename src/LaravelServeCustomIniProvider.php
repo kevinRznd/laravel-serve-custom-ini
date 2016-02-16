@@ -2,8 +2,6 @@
 
 namespace Mmieluch\LaravelServeCustomIni;
 
-use Illuminate\Console\Events\ArtisanStarting;
-use Illuminate\Foundation\Console\ServeCommand as OriginalCommand;
 use Illuminate\Support\ServiceProvider;
 
 class LaravelServeCustomIniProvider extends ServiceProvider
